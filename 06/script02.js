@@ -9,15 +9,20 @@ const getAnswers = (groups) => {
   let result = 0;
 
   groups.forEach((group) => {
-    let answers = new Set();
+    let intersected = [];
+    let persons = [];
 
     group.split(/\r?\n/).forEach((person) => {
+      let answers = [];
       [...person].forEach((answer) => {
-        answers.add(answer);
+        answers.push(answer);
       });
+      persons.push(answers);
     });
 
-    result = result + answers.size;
+    intersected = persons.reduce((a, b) => a.filter((c) => b.includes(c)));
+
+    result = result + intersected.length;
   });
 
   return result;
